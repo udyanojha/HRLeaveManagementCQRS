@@ -22,7 +22,7 @@ namespace HR.LeaveManagement.Persistence
             {
                 options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString"));
             });
-                
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
             services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();

@@ -9,6 +9,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeave
 {
     public class UpdateLeaveTypeCommand : IRequest<int> // we can use Unit if want to return void in IRequest
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int DefaultDays { get; set; }
     }
