@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.DeleteLeaveType
 {
-    public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeCommand, int>
+    public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeCommand, Domain.LeaveType>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         public DeleteLeaveTypeCommandHandler(ILeaveTypeRepository leaveTypeRepository)
         {
             _leaveTypeRepository = leaveTypeRepository;
         }
-        public async Task<int> Handle(DeleteLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.LeaveType> Handle(DeleteLeaveTypeCommand request, CancellationToken cancellationToken)
         {
             // Convert to domain enitity object
             var leaveTypeToDelete = await _leaveTypeRepository.GetByIdAsync(request.Id);
 
             // Verify that record exists TODO
-            if (leaveTypeToDelete != null)
+            if (leaveTypeToDelete == null)
                 throw new NotFoundException(nameof(LeaveType), request.Id);
 
             // Add to database
             await _leaveTypeRepository.DeleteAsync(leaveTypeToDelete);
-            return leaveTypeToDelete.Id;
+            return leaveTypeToDelete;
         }
     }
 }

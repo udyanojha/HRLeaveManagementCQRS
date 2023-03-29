@@ -18,10 +18,12 @@ namespace HR.LeaveManagement.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<HRDatabaseContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString"));
-            });
+            //services.AddDbContext<HRDatabaseContext>(options =>
+            //{
+            //    options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString"));
+            //});
+            services.AddDbContext<HRDatabaseContext>(options => options.UseInMemoryDatabase("HrDatabase"));
+
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();

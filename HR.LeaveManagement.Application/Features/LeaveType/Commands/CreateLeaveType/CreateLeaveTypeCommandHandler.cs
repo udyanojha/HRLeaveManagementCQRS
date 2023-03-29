@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeaveType
 {
-    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, int>
+    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, Domain.LeaveType>
     {
         private readonly IMapper _mapper;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -20,7 +20,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
             _mapper = mapper;
             _leaveTypeRepository = leaveTypeRepository;
         }
-        public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.LeaveType> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming data TODO to ensure Data Integrity
             var validator = new CreateLeaveTypeCommandValidator(_leaveTypeRepository);
@@ -34,7 +34,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
             // Add to database
             await _leaveTypeRepository.CreateAsync(leaveTypeToCreate);
             // return record id
-            return leaveTypeToCreate.Id;
+            return leaveTypeToCreate;
         }
     }
 }

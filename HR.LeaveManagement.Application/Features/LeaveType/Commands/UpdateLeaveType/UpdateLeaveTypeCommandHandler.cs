@@ -4,6 +4,7 @@ using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
 using MediatR;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType
 {
-    public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeCommand, int>
+    public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeCommand, Domain.LeaveType>
     {
         private readonly IMapper _mapper;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -25,11 +26,11 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeave
             _leaveTypeRepository = leaveTypeRepository;
             this._logger = logger;
         }
-        public async Task<int> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.LeaveType> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming data TODO
             var validator = new UpdateLeaveTypeCommandValidator(_leaveTypeRepository);
-            var validationResult = validator.Validate(request);
+            var validationResult =await validator.ValidateAsync(request);
 
             if(validationResult.Errors.Any())
             {
@@ -42,7 +43,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeave
             // add to database
             await _leaveTypeRepository.UpdateAsync(leaveTypeToUpdate);
             _logger.LogInformation("Leave Type Updated for {0}", request.Id);
-            return leaveTypeToUpdate.Id;
+            return leaveTypeToUpdate;
         }
     }
 }
