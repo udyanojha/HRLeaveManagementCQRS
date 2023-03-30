@@ -18,4 +18,10 @@
     <ProjectReference Include="..\HR.LeaveManagement.Domain\HR.LeaveManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\LeaveRequest\Command\CancelLeaveRequest\" />
+    <Folder Include="Features\LeaveRequest\Command\ChangeLeaveRequest\" />
+    <Folder Include="Features\LeaveRequest\Command\UpdateLeaveRequest\" />
+  </ItemGroup>
+
 </Project>

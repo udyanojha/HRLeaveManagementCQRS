@@ -1,6 +1,8 @@
 ﻿using HR.LeaveManagement.Application.Features.LeaveAllocation.Command.CreateLeaveAllocation;
+using HR.LeaveManagement.Application.Features.LeaveAllocation.Command.UpdateLeaveAllocation;
 using HR.LeaveManagement.Application.Features.LeaveAllocation.Query.GetLeaveAllocationDetails;
 using HR.LeaveManagement.Application.Features.LeaveAllocation.Query.GetLeaveAllocations;
+using HR.LeaveManagement.Application.Features.LeaveType.Commands.DeleteLeaveType;
 using HR.LeaveManagement.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -43,5 +45,20 @@ public class LeaveAllocationsController : Controller
         var leaveAllocationCreated = await _mediator.Send(leaveAllocation);
         return Ok(leaveAllocationCreated);
     }
+
+    [HttpPut]
+    public async Task<ActionResult<LeaveAllocation>> Put(UpdateLeaveAllocationCommand leaveAllocation)
+    {
+        return Ok(await _mediator.Send(leaveAllocation));
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<LeaveAllocation>> Delete(int id)
+    {
+        var command = new DeleteLeaveTypeCommand { Id = id };
+        return Ok(await _mediator.Send(command));
+    }
+
+
 
 }
