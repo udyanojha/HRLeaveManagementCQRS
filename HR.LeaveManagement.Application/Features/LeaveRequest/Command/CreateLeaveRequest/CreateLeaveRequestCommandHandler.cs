@@ -3,6 +3,7 @@ using HR.LeaveManagement.Application.Contracts.Email;
 using HR.LeaveManagement.Application.Contracts.Logging;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
+using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
 using System;
@@ -66,4 +67,8 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
 
         return leaveRequest;
     }
+
+    
+
 }
+
