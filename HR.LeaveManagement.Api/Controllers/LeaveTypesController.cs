@@ -40,6 +40,9 @@ public class LeaveTypesController : Controller
     }
 
     [HttpPost]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveType>> CreateLeaveType(CreateLeaveTypeCommand leaveType)
     {
         var leaveTypeToCreate = await _mediator.Send(leaveType);
@@ -47,6 +50,10 @@ public class LeaveTypesController : Controller
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<LeaveType>> UpdateLeaveType(UpdateLeaveTypeCommand leaveType)
     {
         var leaveTypeToUpdate = await _mediator.Send(leaveType);
@@ -55,6 +62,9 @@ public class LeaveTypesController : Controller
 
     [HttpDelete]
     [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<LeaveType>> DeleteLeaveType([FromRoute] int id)
     {
         var command = new DeleteLeaveTypeCommand

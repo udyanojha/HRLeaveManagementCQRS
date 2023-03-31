@@ -36,12 +36,19 @@ namespace HR.LeaveManagement.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<LeaveRequest>> Post(CreateLeaveRequestCommand leaveRequest)
         {
             return Ok(await _mediator.Send(leaveRequest));
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveRequest>> Put(UpdateLeaveRequestCommand leaveRequest)
         {
             return Ok(await _mediator.Send(leaveRequest));
@@ -49,6 +56,10 @@ namespace HR.LeaveManagement.Api.Controllers
 
         [HttpPut]
         [Route("CancelRequest")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveRequest>> Put(CancelLeaveRequestCommand leaveRequest)
         {
             return Ok(await _mediator.Send(leaveRequest));
@@ -56,12 +67,19 @@ namespace HR.LeaveManagement.Api.Controllers
 
         [HttpPut]
         [Route("UpdateApproval")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveRequest>> Put(ChangeLeaveRequestApprovalCommand leaveRequest)
         {
             return Ok(await _mediator.Send(leaveRequest));
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LeaveRequest>> Delete(int id)
         {
             var command = new DeleteLeaveTypeCommand { Id = id };
