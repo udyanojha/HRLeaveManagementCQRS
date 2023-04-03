@@ -41,7 +41,6 @@ public class GetLeaveTypeListQueryHandlerTests
         var result = await handler.Handle(new GetLeaveTypesQueryRequest(), CancellationToken.None);
 
         
-
         result.ShouldBeOfType<List<LeaveTypeDto>>();
         result.Count.ShouldBe(3);
 
