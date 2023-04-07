@@ -1,0 +1,71 @@
+﻿@page "/GetLeaveTypeList"
+@using HR.LeaveManagement.UI.ApiClient;
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+@inject HttpClient Http
+@inject ILeaveTypeService _client;
+
+<PageTitle>HR Leave Management System</PageTitle>
+
+<h1>Leave Type List</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (leaveTypeList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Default Days</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leaveType in leaveTypeList)
+            {
+                <tr>
+                    <td>@leaveType.Id</td>
+                    <td>@leaveType.Name</td>
+                    <td>@leaveType.DefaultDays</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+}
+
+@code {
+    private List<LeaveTypeVM>? leaveTypeList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        leaveTypeList = await _client.GetLeaveTypes();
+    }
+
+    //public class LeaveTypeDto
+    //{
+
+    //    public int Id { get; set; }
+
+    //    public string Name { get; set; }
+        
+    //    public string DefaultDays { get; set; }
+
+    //}
+
+    //public class LeaveTypeDetailsDto
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; } = string.Empty;
+    //    public int DefaultDays { get; set; }
+    //    public DateTime? DateCreated { get; set; }
+    //    public DateTime? DateModified { get; set; }
+    //}
+}

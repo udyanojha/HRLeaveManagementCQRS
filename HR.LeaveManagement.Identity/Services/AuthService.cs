@@ -10,6 +10,7 @@ namespace HR.LeaveManagement.Identity.Services
 {
     public class AuthService : IAuthService
     {
+
         public Task<AuthResponse> Login(AuthRequest request)
         {
             throw new NotImplementedException();

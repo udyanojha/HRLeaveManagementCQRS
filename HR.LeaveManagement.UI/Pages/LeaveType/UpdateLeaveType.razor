@@ -1,0 +1,57 @@
+﻿@page "/UpdateLeaveType"
+@using HR.LeaveManagement.UI.ApiClient;
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+@inject HttpClient Http
+@inject ILeaveTypeService _client;
+
+
+<PageTitle>HR Leave Management System</PageTitle>
+
+<h1>Update Leave Type</h1>
+
+<p>Enter Leave Type Details </p>
+<input type="text" placeholder="Id" @bind="@leaveTypeToUpdate.Id" />
+<input type="text" placeholder="Name" @bind="@leaveTypeToUpdate.Name" />
+<input type="text" placeholder="Default Days" @bind="@leaveTypeToUpdate.DefaultDays" />
+<Button id="create-btn" Color="ButtonColor.Primary" @onclick="OnClickEvent"> Update </Button>
+
+@if (requestSent == false)
+{
+    @*<p>Loading...</p>*@
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Default Days</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@leaveTypeToUpdate.Id</td>
+                <td>@leaveTypeToUpdate.Name</td>
+                <td>@leaveTypeToUpdate.DefaultDays</td>
+            </tr>
+
+        </tbody>
+    </table>
+}
+
+@code {
+    private string id;
+    private LeaveTypeVM leaveTypeToUpdate = new ();
+    private bool requestSent { get; set; } = false;
+    protected async void OnClickEvent()
+    {
+        requestSent = true;
+        await _client.UpdateLeaveType(leaveTypeToUpdate);
+    }
+
+
+    
+}

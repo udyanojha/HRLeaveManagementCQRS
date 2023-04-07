@@ -1,0 +1,27 @@
+﻿@page "/DeleteLeaveType"
+@using HR.LeaveManagement.UI.ApiClient;
+@using HR.LeaveManagement.UI.Contracts;
+@inject HttpClient Http
+@inject ILeaveTypeService _client;
+
+<PageTitle>HR Leave Management System</PageTitle>
+
+<h1>Delete Leave Type</h1>
+
+<p>Enter Id of Leave Type to Delete</p>
+<input type="text" placeholder="Id" @bind="@id" />
+<Button id="delete-btn" Color="ButtonColor.Primary" @onclick="OnClickEvent"> Delete Leave Type </Button>
+@if(isDeleted==true)
+{
+    <p>Deleted Successfully!</p>
+}
+
+@code {
+    private string id;
+    private bool isDeleted { get; set; } = false;
+    protected async void OnClickEvent()
+    {
+        await _client.DeleteLeaveType(id);
+        isDeleted = true;
+    }
+}

@@ -1,0 +1,61 @@
+﻿@page "/CreateLeaveType"
+@using HR.LeaveManagement.UI.ApiClient;
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+@inject HttpClient Http
+@*@inject IWebApiExecuter ApiExecuter*@
+@inject ILeaveTypeService _client;
+
+<PageTitle>HR Leave Management System</PageTitle>
+
+<h1>Create Leave Type</h1>
+
+<p>Enter Id for Leave Type Details </p>
+<input type="text" placeholder="Name" @bind="@leaveTypeToCreate.Name" />
+<input type="text" placeholder="Default Days" @bind="@leaveTypeToCreate.DefaultDays"   />
+<Button id="create-btn" Color="ButtonColor.Primary" @onclick="OnClickEvent"> Create Leave Type </Button>
+
+@if (requestSent == false)
+{
+    @*<p>Loading...</p>*@
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>Id</th>*@
+                <th>Name</th>
+                <th>Default Days</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @*<td>@leaveTypeToCreate.Id</td>*@
+                <td>@leaveTypeToCreate.Name</td>
+                <td>@leaveTypeToCreate.DefaultDays</td>
+            </tr>
+            
+        </tbody>
+    </table>
+}
+
+@code {
+    //private string id;
+    private LeaveTypeVM leaveTypeToCreate = new();
+    private bool requestSent { get; set; } = false;
+    protected async void OnClickEvent()
+    {
+        requestSent = true;
+        leaveTypeToCreate = await _client.CreateLeaveType(leaveTypeToCreate);
+    }
+
+
+    //public class LeaveTypeCommand
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public int DefaultDays { get; set; }
+    //}
+}
