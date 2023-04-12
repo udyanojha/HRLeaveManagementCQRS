@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using Blazored.LocalStorage;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace HR.LeaveManagement.UI.ApiClient
@@ -6,11 +8,14 @@ namespace HR.LeaveManagement.UI.ApiClient
     public class WebApiExecuter : IWebApiExecuter
     {
         private readonly string _baseUrl;
-        private readonly HttpClient _httpClient;
+        public HttpClient _httpClient;
+        protected readonly ILocalStorageService _localStorage;
+
         public WebApiExecuter() // string baseUrl, HttpClient httpClient
         {
             //_baseUrl = baseUrl;
             //_httpClient = httpClient;
+
             _baseUrl = "https://localhost:7276";
             _httpClient = new HttpClient();
 
@@ -44,10 +49,18 @@ namespace HR.LeaveManagement.UI.ApiClient
             response.EnsureSuccessStatusCode();
         }
 
-
         private string GetUrl(string uri)
         {
             return $"{_baseUrl}/{uri}";
         }
+
+        // Not using RN
+        public async Task AddBearerToken(ILocalStorageService _localStorage)
+        {
+            if (await _localStorage.ContainKeyAsync("token"))
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _localStorage.GetItemAsync<string>("token"));
+        }
+
+       
     }
 }

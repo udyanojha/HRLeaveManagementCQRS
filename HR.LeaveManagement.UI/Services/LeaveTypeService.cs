@@ -35,7 +35,7 @@ namespace HR.LeaveManagement.UI.Services
         public async Task<LeaveTypeDetailsDto> GetLeaveTypeDetails(int id)
         {
             var leaveTypeDetails = await _client.InvokeGet<LeaveTypeDetailsDto>($"api/LeaveTypes/{id}");
-            //return _mapper.Map<LeaveTypeDetailsDto>( leaveTypeDetails );
+            //return _mapper.Map<LeaveTypeVM>(leaveTypeDetails);
             return leaveTypeDetails;
         }
 

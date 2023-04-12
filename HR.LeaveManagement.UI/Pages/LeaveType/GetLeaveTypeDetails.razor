@@ -12,7 +12,7 @@
 
 <p>Enter Id for Leave Type Details </p>
 <input type="text" @bind="@id" />
-<Button id="create-btn" Color="ButtonColor.Primary" @onclick="OnClickEvent"> Create Leave Type </Button>
+<Button id="create-btn" Color="ButtonColor.Primary" @onclick="OnClickEvent"> Leave Type Details </Button>
 
 
 @if (leaveTypeDetails == null)
@@ -21,25 +21,6 @@
 }
 else
 {
-    @*<table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Default Days</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var leaveType in leaveTypeList)
-            {
-                <tr>
-                    <td>@leaveType.Id</td>
-                    <td>@leaveType.Name</td>
-                    <td>@leaveType.DefaultDays</td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
     <table class="table">
         <thead>
             <tr>
@@ -58,7 +39,7 @@ else
                 <td>@leaveTypeDetails.DateCreated</td>
                 <td>@leaveTypeDetails.DateModified</td>
             </tr>
-            
+
         </tbody>
     </table>
 }
@@ -66,17 +47,19 @@ else
 @code {
     private LeaveTypeDetailsDto leaveTypeDetails;
     private int id;
+    //private MarkupString text;
     //protected override async Task OnInitializedAsync()
     //{
     //    leaveTypeDetails = await ApiExecuter.InvokeGet<LeaveTypeDetailsDto>($"api/LeaveTypes/{id}");
     //}
-    
+
     protected async void OnClickEvent()
     {
         leaveTypeDetails = await _client.GetLeaveTypeDetails(id);
+
     }
 
-    
+
 
     //public class LeaveTypeDetails
     //{

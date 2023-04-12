@@ -1,0 +1,39 @@
+﻿@page "/leavetypes/edit/{id:int}"
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+@*@attribute [Authorize(Roles = "Administrator")]*@
+
+<h3>Edit Leave Type</h3>
+
+@if (string.IsNullOrEmpty(Message) == false)
+{
+    <div class="alert alert-danger">
+        @Message
+    </div>
+}
+
+<FormComponent ButtonText="Update" LeaveType="leaveType" OnValidSubmit="@EditLeaveType" />
+
+@code {
+    [Inject]
+    ILeaveTypeService _client { get; set; }
+
+    [Inject]
+    NavigationManager _navManager { get; set; }
+
+    [Parameter]
+    public int id { get; set; }
+    public string Message { get; private set; }
+
+    LeaveTypeVM leaveType = new LeaveTypeVM();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        leaveType = await _client.GetLeaveTypeDetails(id);
+    }
+
+    async Task EditLeaveType()
+    {
+        await _client.UpdateLeaveType(leaveType);
+    }
+}

@@ -1,0 +1,37 @@
+﻿@page "/leavetypes/create/"
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+@*@attribute [Authorize(Roles ="Administrator")]*@
+<h3>Create Leave Type</h3>
+
+@if (leaveTypeToCreate == null)
+{
+    <div class="alert alert-danger">
+        Not Created
+    </div>
+}
+
+<FormComponent ButtonText="Create" LeaveType="leaveType" OnValidSubmit="@CreateLeaveType" />
+
+@code {
+
+    private LeaveTypeVM leaveTypeToCreate = null;
+
+    [Inject]
+    NavigationManager _navManager { get; set; }
+    [Inject]
+    ILeaveTypeService _client { get; set; }
+    public string Message { get; private set; }
+
+    LeaveTypeVM leaveType = new LeaveTypeVM();
+    async Task CreateLeaveType()
+    {
+        leaveTypeToCreate = await _client.CreateLeaveType(leaveType);
+        if (leaveTypeToCreate != null)
+        {
+            _navManager.NavigateTo("/leavetypes/");
+        }
+
+    }
+    
+}

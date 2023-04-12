@@ -1,0 +1,23 @@
+﻿@page "/leavetypes/details/{id:int}"
+@using HR.LeaveManagement.UI.Contracts;
+@using HR.LeaveManagement.UI.Models.LeaveTypes;
+
+<h3>Details</h3>
+
+<FormComponent LeaveType="leaveType" Disaabled="true" />
+
+@code {
+    [Inject]
+    ILeaveTypeService _client { get; set; }
+
+    [Parameter] 
+    public int id { get; set; }
+
+    LeaveTypeVM leaveType = new LeaveTypeVM();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        leaveType = await _client.GetLeaveTypeDetails(id);
+    }
+}
+
